@@ -6,29 +6,24 @@ const bodyParser = require('body-parser')
 
 const { port, url } = require('./config/index')
 
-const findCommunes = require('./find-communes')
+const communesFind = require('./communes-find')
 
 const app = express()
 
 app.use(bodyParser.json())
 
-app.post('/', (req, res) => {
-  const { body } = req
+app.get('/', (req, res) => {
+  res.send('Géo communes API | https://github.com/MTES-MCT/geo-communes-api')
+})
 
-  const communes = findCommunes(body)
+app.post('/', ({ body }, res) => {
+  const communes = communesFind(body)
 
-  res.send({
-    communes,
-    body,
-  })
+  res.send(communes)
 })
 
 app.listen(port, () => {
   console.log(' ')
   console.log(chalk.bgWhiteBright.black.bold('> Url: ' + url + ' '))
-  console.log(chalk.bgWhiteBright.black.bold('> ENV: ' + process.env.ENV + ' '))
-  console.log(
-    chalk.bgWhiteBright.black.bold('> NODE_ENV: ' + process.env.NODE_ENV + ' ')
-  )
   console.log(' ')
 })
