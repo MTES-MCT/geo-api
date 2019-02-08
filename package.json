@@ -1,6 +1,6 @@
 {
   "name": "geo-server",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Retourne une liste de communes françaises en fonction d'un périmètre géographique",
   "license": "ISC",
   "main": "index.js",
