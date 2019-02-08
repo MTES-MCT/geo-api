@@ -11,13 +11,14 @@ services:
     expose:
       - ${NODE_PORT}
     volumes:
-      - communes-api-geojson:/api/sources
+      - geo-communes-api-sources:/api/sources
       - ./:/api
     working_dir: /api
     command: npm run start
 
 volumes:
-  communes-api-geojson: {}
+  geo-communes-api-sources:
+    external: true
 
 networks:
   default:
