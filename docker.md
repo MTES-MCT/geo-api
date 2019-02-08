@@ -1,18 +1,28 @@
-# Docker
+# Déploiement
+
+## Copier les fichiers json sur le serveur
+
+```bash
+scp -r sources <user>@<ip>:/srv/tmp/geo-communes-api-sources
+```
 
 ## Créer un volume Docker pour y copier les sources
 
-Pour créer un volume docker et y copier des fichiers il est nécessaire de créer un container [cf](https://github.com/moby/moby/issues/25245#issuecomment-365980572).
+Pour créer un volume docker il est nécessaire de créer un container [cf](https://github.com/moby/moby/issues/25245#issuecomment-365980572).
 
 ```bash
+# créé un container dummy avec l'image Docker hello-world auquel on associe le volume
 docker container create --name dummy -v geo-communes-api-sources:/root hello-world
-docker cp s/. dummy:/root/
+# copie les fichiers dans le volume en passant par le container
+docker cp geo-communes-api/. dummy:/root/
+# supprime le container
 docker rm dummy
 ```
 
-## Lister les fichiers dans le volume Docker 
+## Lister les fichiers dans le volume Docker
 
 ```bash
+# créé un container avec l'image Docker busybox pour inspécter le contenu du volume
 docker run -it --rm -v geo-communes-api-sources:/vol busybox ls -l /vol
 ```
 
