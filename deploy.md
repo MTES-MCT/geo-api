@@ -1,6 +1,6 @@
 # Déploiement
 
-## Copier les fichiers json sur le serveur
+## Copier les fichiers sources (geojson) sur le serveur
 
 ```bash
 scp -r sources <user>@<ip>:/srv/tmp/geo-communes-api-sources

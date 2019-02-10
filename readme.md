@@ -16,7 +16,10 @@
 Pour que l'application fonctionne, sont requis:
 
 - Node.js (v.10 ou plus) et npm
-- Les fichiers sources geoJson des périmètres géographiques des régions, départements, communes.
+- Les fichiers sources geoJson des périmètres géographiques des régions, départements, communes:
+- - `regions-100m.geojson.json`
+- - `departements-100m.geojson.json`
+- - `communes-100m.geojson.json`
 
 ---
 

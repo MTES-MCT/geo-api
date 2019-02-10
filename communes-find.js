@@ -17,7 +17,7 @@ sourceRegions.forEach(r => {
   )
 })
 
-function findCommunes(geojson) {
+function communesFind(geojson) {
   const regions = sourceRegions.filter(polygon => intersect(geojson, polygon))
   if (!regions) return []
 
@@ -45,4 +45,4 @@ function findCommunes(geojson) {
   return communes || []
 }
 
-module.exports = findCommunes
+module.exports = communesFind
