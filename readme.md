@@ -16,16 +16,16 @@
 Pour que l'application fonctionne, sont requis:
 
 - Node.js (v.10 ou plus) et npm
-- Les fichiers sources geoJson des périmètres géographiques des régions, départements, communes:
-- - `regions-100m.geojson.json`
-- - `departements-100m.geojson.json`
-- - `communes-100m.geojson.json`
+- Les fichiers sources geoJson des périmètres géographiques des régions, départements, communes
 
 ---
 
 ## Configuration et imports des données
 
-- Importer les fichiers sources dans le dossier `/sources`.
+- Importer les fichiers sources dans le dossier `/sources`:
+- - `regions-100m.geojson.json`
+- - `departements-100m.geojson.json`
+- - `communes-100m.geojson.json`
 - Renommer le fichier `.env.example` en `.env` et le compléter.
 
 ```bash
