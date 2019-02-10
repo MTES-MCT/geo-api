@@ -1,35 +1,48 @@
 const intersect = require('@turf/intersect').default
 
-const communes = require('./sources/communes-100m.geojson').features
-const departements = require('./sources/departements-100m.geojson').features
-const regions = require('./sources/regions-100m.geojson').features
+const sourceCommunes = require('./sources/communes-100m.geojson').features
+const sourceDepartements = require('./sources/departements-100m.geojson')
+  .features
+const sourceRegions = require('./sources/regions-100m.geojson').features
 
-departements.forEach(d => {
-  d.properties.communes = communes.filter(
+sourceDepartements.forEach(d => {
+  d.properties.communes = sourceCommunes.filter(
     c => c.properties.departement === d.properties.code
   )
 })
 
-regions.forEach(r => {
-  r.properties.departements = departements.filter(
+sourceRegions.forEach(r => {
+  r.properties.departements = sourceDepartements.filter(
     d => d.properties.region === r.properties.code
   )
 })
 
-function findCommunes(titre) {
-  const region = regions.find(polygon => intersect(titre, polygon))
-  if (!region) return []
+function findCommunes(geojson) {
+  const regions = sourceRegions.filter(polygon => intersect(geojson, polygon))
+  if (!regions) return []
 
-  const departement = region.properties.departements.find(polygon =>
-    intersect(titre, polygon)
+  const departements = regions.reduce(
+    (departements, region) => [
+      ...departements,
+      ...region.properties.departements.filter(polygon =>
+        intersect(geojson, polygon)
+      )
+    ],
+    []
   )
-  if (!departement) return []
+  if (!departements) return []
 
-  const items = departement.properties.communes.filter(polygon =>
-    intersect(titre, polygon)
+  const communes = departements.reduce(
+    (communes, departement) => [
+      ...communes,
+      ...departement.properties.communes.filter(polygon =>
+        intersect(geojson, polygon)
+      )
+    ],
+    []
   )
 
-  return items || []
+  return communes || []
 }
 
 module.exports = findCommunes
