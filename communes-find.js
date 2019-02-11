@@ -18,14 +18,14 @@ sourceRegions.forEach(r => {
 })
 
 function communesFind(geojson) {
-  const regions = sourceRegions.filter(polygon => intersect(geojson, polygon))
+  const regions = sourceRegions.filter(region => intersect(geojson, region))
   if (!regions) return []
 
   const departements = regions.reduce(
     (departements, region) => [
       ...departements,
-      ...region.properties.departements.filter(polygon =>
-        intersect(geojson, polygon)
+      ...region.properties.departements.filter(departement =>
+        intersect(geojson, departement)
       )
     ],
     []
@@ -35,8 +35,8 @@ function communesFind(geojson) {
   const communes = departements.reduce(
     (communes, departement) => [
       ...communes,
-      ...departement.properties.communes.filter(polygon =>
-        intersect(geojson, polygon)
+      ...departement.properties.communes.filter(commune =>{
+        return intersect(geojson, commune)}
       )
     ],
     []
