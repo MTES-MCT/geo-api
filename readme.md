@@ -37,6 +37,8 @@ npm run start
 
 ## Usage
 
+Démarre le service:
+
 ```bash
 # installe les dépendances et démarre le serveur
 npm run start
