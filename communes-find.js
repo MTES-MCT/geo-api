@@ -1,4 +1,4 @@
-const intersect = require('@turf/intersect').default
+const { intersect } = require('turf')
 
 const sourceCommunes = require('./sources/communes-100m.geojson').features
 const sourceDepartements = require('./sources/departements-100m.geojson')
