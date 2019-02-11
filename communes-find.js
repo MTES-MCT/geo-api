@@ -19,7 +19,7 @@ sourceRegions.forEach(r => {
 
 function communesFind(geojson) {
   const regions = sourceRegions.filter(region => intersect(geojson, region))
-  if (!regions) return []
+  if (!regions.length) return []
 
   const departements = regions.reduce(
     (departements, region) => [
@@ -30,7 +30,7 @@ function communesFind(geojson) {
     ],
     []
   )
-  if (!departements) return []
+  if (!departements.length) return []
 
   const communes = departements.reduce(
     (communes, departement) => [
@@ -42,7 +42,7 @@ function communesFind(geojson) {
     []
   )
 
-  return communes || []
+  return communes
 }
 
 module.exports = communesFind

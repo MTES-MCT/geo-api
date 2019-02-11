@@ -15,9 +15,15 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', ({ body }, res) => {
-  const communes = communesFind(body)
+  try {
+    const communes = communesFind(body)
 
-  res.send(communes)
+    res.send(communes)
+  } catch (err) {
+    console.error(err)
+
+    res.status(500).json({ error: err.message })
+  }
 })
 
 app.listen(port, () => {
