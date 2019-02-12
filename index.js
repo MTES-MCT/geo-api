@@ -4,7 +4,11 @@ const bodyParser = require('body-parser')
 
 const { port, url } = require('./config/index')
 
-const communesFind = require('./communes-find')
+// Recherche naïve de comparaison itérative
+// const communesFind = require('./communes-find-intersect')
+
+// Recherche utilisant un index basé sur les bbox
+const communesFind = require('./communes-find-rbush')
 
 const app = express()
 
@@ -16,11 +20,12 @@ app.get('/', (req, res) => {
 
 app.post('/', ({ body }, res) => {
   try {
-    const communes = communesFind(body)
+    const communes = communesFindRbush(body)
 
     res.send(communes)
   } catch (err) {
     console.error(err)
+    console.error(JSON.stringify(body))
 
     res.status(500).json({ error: err.message })
   }
