@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 
 app.post('/', ({ body }, res) => {
   try {
-    const communes = communesFindRbush(body)
+    const communes = communesFind(body)
 
     res.send(communes)
   } catch (err) {
