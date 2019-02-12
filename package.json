@@ -1,13 +1,14 @@
 {
   "name": "geo-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Retourne une liste de communes françaises en fonction d'un périmètre géographique",
   "license": "ISC",
   "main": "index.js",
   "dependencies": {
     "@turf/intersect": "^6.1.3",
     "dotenv": "^6.2.0",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "geojson-rbush": "^3.1.1"
   },
   "devDependencies": {
     "eslint": "^5.13.0",
