@@ -40,6 +40,12 @@ npm run start
 Démarre le service:
 
 ```bash
+# installe les dépendances
+npm i
+
+# lance le serveur
+npm run serve
+
 # installe les dépendances et démarre le serveur
 npm run start
 ```

@@ -2,14 +2,14 @@ const intersect = require('@turf/intersect').default
 const geojsonRbush = require('geojson-rbush').default
 const tree = geojsonRbush()
 
-console.info('chargement des communes...')
+console.info('Chargement des communes...')
 
 const sourceCommunes = require('./sources/communes-100m.geojson').features
 
-console.info('insertion dans l\'index')
+console.info("Insertion dans l'index")
 sourceCommunes.forEach(c => tree.insert(c))
 
-console.info('prêt')
+console.info('Prêt')
 
 function communesFind(geojson) {
   if (!geojson.properties) {
@@ -18,15 +18,15 @@ function communesFind(geojson) {
 
   const feature = {
     type: 'FeatureCollection',
-    features: [geojson],
+    features: [geojson]
   }
 
   // Recherche le périmètre dans l'index bbox
   const { features: matchingCommunes } = tree.search(geojson)
 
   // Filtre les communes trouvées par l'index et compare le périmètre
-  const communes = matchingCommunes.filter(
-    commune => intersect(geojson, commune)
+  const communes = matchingCommunes.filter(commune =>
+    intersect(geojson, commune)
   )
 
   return communes
