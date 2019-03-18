@@ -45,8 +45,8 @@ function communesFind(geojson) {
   const communes = departements.reduce(
     (communes, departement) => [
       ...communes,
-      ...departement.properties.communes.filter(
-        commune => intersect(geojson, commune)
+      ...departement.properties.communes.filter(commune =>
+        intersect(geojson, commune)
       )
     ],
     []

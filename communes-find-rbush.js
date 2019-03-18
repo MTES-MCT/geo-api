@@ -16,11 +16,6 @@ function communesFind(geojson) {
     geojson.properties = {}
   }
 
-  const feature = {
-    type: 'FeatureCollection',
-    features: [geojson]
-  }
-
   // Recherche le périmètre dans l'index bbox
   const { features: matchingCommunes } = tree.search(geojson)
 
