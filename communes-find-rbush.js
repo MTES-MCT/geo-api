@@ -19,7 +19,8 @@ function communesFind(geojson) {
   // Recherche le périmètre dans l'index bbox
   const { features: matchingCommunes } = tree.search(geojson)
 
-  // Filtre les communes trouvées par l'index et compare le périmètre
+  // Filtre les communes trouvées par l'index
+  // en ne gardant que les intersections avec périmètre
   const communes = matchingCommunes.filter(commune =>
     intersect(geojson, commune)
   )
