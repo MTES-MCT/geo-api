@@ -11,10 +11,10 @@ scp -r sources <user>@<ip>:/srv/tmp/geo-communes-api-sources
 Pour créer un volume docker il est nécessaire de créer un container [cf](https://github.com/moby/moby/issues/25245#issuecomment-365980572).
 
 ```bash
-# créé un container dummy avec l'image Docker hello-world auquel on associe le volume
-docker container create --name dummy -v geo-communes-api-sources:/root hello-world
+# créé un container dummy avec l'image Docker busybox auquel on associe le volume
+docker container create --name dummy -v geo-communes-api-sources:/vol busybox
 # copie les fichiers dans le volume en passant par le container
-docker cp geo-communes-api/. dummy:/root/
+docker cp geo-communes-api/. dummy:/vol/
 # supprime le container
 docker rm dummy
 ```
