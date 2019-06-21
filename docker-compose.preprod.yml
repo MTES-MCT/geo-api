@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  communes-api:
+    image: node:alpine
+    environment:
+      VIRTUAL_HOST: preprod.communes.camino.beta.gouv.fr
+      VIRTUAL_PORT: ${NODE_PORT}
+      LETSENCRYPT_HOST: preprod.communes.camino.beta.gouv.fr
+      LETSENCRYPT_EMAIL: risseraka@gmail.com
+    expose:
+      - ${NODE_PORT}
+    volumes:
+      - geo-communes-api-sources:/api/sources
+      - ./:/api
+    working_dir: /api
+    command: npm run start
+
+volumes:
+  geo-communes-api-sources:
+    external: true
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
