@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const { port, url } = require('./config/index')
+const { port, url } = require('./config')
 
 // Recherche naïve de comparaison itérative
 // const communesFind = require('./communes-find-intersect')
