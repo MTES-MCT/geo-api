@@ -24,11 +24,20 @@ app.post('/', ({ body }, res) => {
 
     res.send(communes)
   } catch (err) {
-    console.error(err)
-    console.error(JSON.stringify(body))
+    err.body = body
 
-    res.status(500).json({ error: err.message })
+    throw err
   }
+})
+
+app.use((err, req, res, next) => {
+  console.error(err)
+
+  if (err.body) {
+    console.error(JSON.stringify(err.body))
+  }
+
+  res.status(500).json({ error: err.message })
 })
 
 app.listen(port, () => {
