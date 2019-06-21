@@ -4,7 +4,7 @@ services:
   communes-api:
     image: node:alpine
     environment:
-      VIRTUAL_HOST: communes.camino.local
+      VIRTUAL_HOST: ${URL}
       VIRTUAL_PORT: ${NODE_PORT}
     expose:
       - ${NODE_PORT}
