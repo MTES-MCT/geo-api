@@ -4,9 +4,9 @@ services:
   communes-api:
     image: node:alpine
     environment:
-      VIRTUAL_HOST: preprod.communes.camino.beta.gouv.fr
+      VIRTUAL_HOST: communes.preprod.camino.beta.gouv.fr
       VIRTUAL_PORT: ${NODE_PORT}
-      LETSENCRYPT_HOST: preprod.communes.camino.beta.gouv.fr
+      LETSENCRYPT_HOST: communes.preprod.camino.beta.gouv.fr
       LETSENCRYPT_EMAIL: risseraka@gmail.com
     expose:
       - ${NODE_PORT}
