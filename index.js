@@ -4,6 +4,7 @@ const express = require('express')
 require('express-async-errors')
 
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
 const { port, url } = require('./config')
 
@@ -15,6 +16,7 @@ const communesFind = require('./communes-find-rbush')
 
 const app = express()
 
+app.use(morgan('dev'))
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
