@@ -16,15 +16,20 @@ function communesFind(geojson) {
     geojson.properties = {}
   }
 
-  // Recherche le périmètre dans l'index bbox
-  const { features: matchingCommunes } = tree.search(geojson)
+  try {
+    // Recherche le périmètre dans l'index bbox
+    const { features: matchingCommunes } = tree.search(geojson)
 
-  // Filtre les communes trouvées par l'index et compare le périmètre
-  const communes = matchingCommunes.filter(commune =>
-    intersect(geojson, commune)
-  )
+    // Filtre les communes trouvées par l'index et compare le périmètre
+    const communes = matchingCommunes.filter(commune =>
+      intersect(geojson, commune)
+    )
 
-  return communes
+    return communes
+  } catch (e) {
+    e.status = 400
+    throw e
+  }
 }
 
 module.exports = communesFind
