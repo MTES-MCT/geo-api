@@ -1,5 +1,8 @@
 require('dotenv').config()
+
 const express = require('express')
+require('express-async-errors')
+
 const bodyParser = require('body-parser')
 
 const { port, url } = require('./config')
@@ -18,7 +21,7 @@ app.get('/', (req, res) => {
   res.send('Géo communes API | https://github.com/MTES-MCT/geo-communes-api')
 })
 
-app.post('/', ({ body }, res) => {
+app.post('/', ({ body }, res, next) => {
   try {
     const communes = communesFind(body)
 
@@ -26,7 +29,7 @@ app.post('/', ({ body }, res) => {
   } catch (err) {
     err.body = body
 
-    throw err
+    next(err)
   }
 })
 
