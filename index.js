@@ -6,13 +6,13 @@ require('express-async-errors')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 
-const { port, url } = require('./config')
+const { port, url } = require('./lib/config')
 
 // Recherche naïve de comparaison itérative
 // const communesFind = require('./communes-find-intersect')
 
 // Recherche utilisant un index basé sur les bbox
-const communesFind = require('./communes-find-rbush')
+const communesFind = require('./lib/communes-find-rbush')
 
 const app = express()
 
@@ -47,6 +47,7 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => {
   console.log(' ')
+  console.log('> Env: ', process.env.NODE_ENV)
   console.log('> Url: ', url)
   console.log(' ')
 })

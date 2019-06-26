@@ -2,17 +2,15 @@ version: '3'
 
 services:
   communes-api:
-    image: node:alpine
+    build: .
     environment:
+      NODE_ENV: production
       VIRTUAL_HOST: ${URL}
       VIRTUAL_PORT: ${NODE_PORT}
     expose:
       - ${NODE_PORT}
     volumes:
       - geo-communes-api-sources:/api/sources
-      - ./:/api
-    working_dir: /api
-    command: npm run start
 
 volumes:
   geo-communes-api-sources:
