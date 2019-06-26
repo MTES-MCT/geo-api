@@ -1,6 +1,6 @@
 {
   "name": "geo-communes-api",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Retourne une liste de communes françaises en fonction d'un périmètre géographique",
   "license": "AGPL-3.0-or-later",
   "repository": {
