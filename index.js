@@ -5,6 +5,7 @@ require('express-async-errors')
 
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const slowDown = require('express-slow-down')
 
 const { port, url } = require('./lib/config')
 
@@ -13,8 +14,19 @@ const { port, url } = require('./lib/config')
 
 // Recherche utilisant un index basé sur les bbox
 const communesFind = require('./lib/communes-find-rbush')
+const tree = require('./lib/rbush-tree')
 
 const app = express()
+
+app.enable('trust proxy')
+
+const speedLimiter = slowDown({
+  windowMs: 1000,
+  delayAfter: 50,
+  delayMs: 100
+})
+
+app.use(speedLimiter)
 
 app.use(morgan('dev'))
 app.use(bodyParser.json())
@@ -25,7 +37,7 @@ app.get('/', (req, res) => {
 
 app.post('/', ({ body }, res, next) => {
   try {
-    const communes = communesFind(body)
+    const communes = communesFind(body, tree)
 
     res.send(communes)
   } catch (err) {
@@ -38,9 +50,9 @@ app.post('/', ({ body }, res, next) => {
 app.use((err, req, res, next) => {
   console.error(err)
 
-  if (err.body) {
-    console.error(JSON.stringify(err.body))
-  }
+  // if (err.body) {
+  //   console.error(JSON.stringify(err.body))
+  // }
 
   res.status(err.status || 500).json({ error: err.message })
 })
