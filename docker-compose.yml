@@ -12,6 +12,7 @@ services:
       - ${NODE_PORT}
     volumes:
       - geo-communes-api-sources:/api/sources
+    restart: always
 
 volumes:
   geo-communes-api-sources:
