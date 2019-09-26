@@ -16,7 +16,7 @@
 Pour que l'application fonctionne, sont requis:
 
 - Node.js (v.10 ou plus) et npm
-- Les [fichiers sources geoJson](http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/2018/geojson/) des périmètres géographiques des régions, départements, communes
+- Les [fichiers sources geoJson](http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/2019/geojson/) des périmètres géographiques des régions, départements, communes
 
 ---
 
