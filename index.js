@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 require('express-async-errors')
 
+const basicAuth = require('express-basic-auth')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const slowDown = require('express-slow-down')
@@ -34,6 +35,14 @@ app.use(bodyParser.json())
 app.get('/', (req, res) => {
   res.send('Géo communes API | https://github.com/MTES-MCT/geo-communes-api')
 })
+
+if (process.env.BASIC_USER && process.env.BASIC_PASSWORD) {
+  app.use(
+    basicAuth({
+      users: { [process.env.BASIC_USER]: process.env.BASIC_PASSWORD }
+    })
+  )
+}
 
 app.post('/', ({ body }, res, next) => {
   try {
