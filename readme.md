@@ -22,10 +22,7 @@ Pour que l'application fonctionne, sont requis:
 
 ## Configuration et imports des données
 
-- Importer les fichiers sources dans le dossier `/sources`:
-- - `regions-100m.geojson.json`
-- - `departements-100m.geojson.json`
-- - `communes-100m.geojson.json`
+- Importer le fichier source dans le dossier `/sources`: `communes-100m.geojson`
 - Renommer le fichier `.env.example` en `.env` et le compléter.
 
 ```bash
