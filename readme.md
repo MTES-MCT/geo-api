@@ -15,14 +15,14 @@
 
 Pour que l'application fonctionne, sont requis:
 
-- Node.js (v.10 ou plus) et npm
-- Le [fichier source](http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/2019/geojson/communes-100m.geojson) des périmètres géographiques des communes
+- Node.js (v.10 ou plus) et npm.
+- Le [fichier source](http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/2019/geojson/communes-100m.geojson) des périmètres géographiques des communes.
 
 ---
 
 ## Configuration et imports des données
 
-- Importer le fichier source dans le dossier `/sources`: `communes-100m.geojson`
+- Importer le fichier source dans le dossier `/sources`: `communes-100m.geojson`.
 - Renommer le fichier `.env.example` en `.env` et le compléter.
 
 ---
@@ -34,7 +34,7 @@ Pour que l'application fonctionne, sont requis:
 npm run start
 ```
 
-- répond à une requête POST contenant un geoJson
+- répond à une requête POST contenant un geoJson.
 - retourne une liste de communes françaises dont le périmètre contient une intersection avec le geoJson.
 
 Exemple de code javascript pour interroger l'API :
