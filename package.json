@@ -33,8 +33,7 @@
   },
   "scripts": {
     "dev": "nodemon ./index.js",
-    "serve": "node ./index.js",
-    "start": "npm i && npm run serve"
+    "start": "node ./index.js"
   },
   "eslintConfig": {
     "extends": [

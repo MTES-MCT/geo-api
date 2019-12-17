@@ -9,9 +9,8 @@ WORKDIR $dir
 COPY package.json /tmp/package.json
 RUN cd /tmp && npm install --production && cp -a /tmp/node_modules $dir/
 
-COPY .env ./
 COPY package*.json ./
 COPY index.js ./
 COPY lib lib/
 
-CMD ["npm", "start"]
+CMD npm run start

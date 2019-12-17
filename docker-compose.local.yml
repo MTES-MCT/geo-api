@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  communes-api:
+  app:
     build: .
     environment:
       NODE_ENV: production
@@ -11,6 +11,7 @@ services:
       - ${NODE_PORT}
     volumes:
       - geo-communes-api-sources:/api/sources
+    env_file: .env
 
 volumes:
   geo-communes-api-sources:
