@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  app:
+  communes-api:
     build: .
     environment:
       VIRTUAL_HOST: ${URL}
@@ -12,8 +12,8 @@ services:
       - ${NODE_PORT}
     volumes:
       - geo-communes-api-sources:/api/sources
+      - ./.env:/app/.env
     restart: always
-    env_file: .env
 
 volumes:
   geo-communes-api-sources:
