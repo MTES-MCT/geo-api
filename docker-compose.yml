@@ -11,7 +11,7 @@ services:
     expose:
       - ${NODE_PORT}
     volumes:
-      - geo-communes-api-sources:/api/sources
+      - geo-communes-api-sources:/app/sources
       - ./.env:/app/.env
     restart: always
 
