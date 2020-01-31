@@ -66,5 +66,5 @@ Pré-requis:
 # démarre l'application dans un container Docker
 # en mode `production`
 # accessible à http://api.camino.beta.gouv.fr
-docker-compose -f ./docker-compose.prod.yml up -d --build
+docker-compose -f ./docker-compose.yml up -d --build
 ```
