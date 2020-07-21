@@ -34,7 +34,7 @@ docker run -it --rm -v geo-communes-api-sources:/vol busybox ls -l /vol
 ```bash
 # démarre l'application dans un conteneurs Docker
 # en mode `development`
-# accessible à http://localhost:NODE_PORT
+# accessible à http://localhost:PORT
 docker-compose -f ./docker-compose.localhost.yml up --build
 ```
 

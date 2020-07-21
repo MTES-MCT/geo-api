@@ -2,17 +2,20 @@ version: '3'
 
 services:
   communes-api:
+    container_name: geo_communes_api
     build: .
     environment:
       VIRTUAL_HOST: ${URL}
-      VIRTUAL_PORT: ${NODE_PORT}
+      VIRTUAL_PORT: ${PORT}
       LETSENCRYPT_HOST: ${URL}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
     expose:
-      - ${NODE_PORT}
+      - ${PORT}
     volumes:
       - geo-communes-api-sources:/app/sources
       - ./.env:/app/.env
+    networks:
+      - nginx-proxy
     restart: always
 
 volumes:
@@ -20,6 +23,5 @@ volumes:
     external: true
 
 networks:
-  default:
-    external:
-      name: nginx-proxy
+  nginx-proxy:
+    external: true

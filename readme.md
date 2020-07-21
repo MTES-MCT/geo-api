@@ -34,24 +34,24 @@ Pour que l'application fonctionne, sont requis:
 npm run start
 ```
 
-- répond à une requête POST contenant un geoJson.
-- retourne une liste de communes françaises dont le périmètre contient une intersection avec le geoJson.
+- répond à une requête POST contenant un GeoJSON.
+- retourne une liste de communes françaises dont le périmètre contient une intersection avec le GeoJSON.
 
 Exemple de code javascript pour interroger l'API :
 
 ```js
 const geoCommunesApiUrl = 'http://localhost:1234' // renseigner l'url de l'API
 
-const communesGeojsonGet = geojson =>
+const communesGeojsonGet = (geojson) =>
   fetch(geoCommunesApiUrl, {
     method: 'post',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(geojson)
+    body: JSON.stringify(geojson),
   })
-    .then(response => response.json())
-    .catch(err => {
+    .then((response) => response.json())
+    .catch((err) => {
       console.log('communesGeojsonGet error: ', err)
       return []
     })

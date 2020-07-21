@@ -2,22 +2,24 @@ version: '3'
 
 services:
   communes-api:
+    container_name: geo_communes_api
     build: .
     environment:
       NODE_ENV: production
       VIRTUAL_HOST: ${URL}
-      VIRTUAL_PORT: ${NODE_PORT}
+      VIRTUAL_PORT: ${PORT}
     expose:
-      - ${NODE_PORT}
+      - ${PORT}
     volumes:
       - geo-communes-api-sources:/app/sources
       - ./.env:/app/.env
+    networks:
+      - nginx-proxy
 
 volumes:
   geo-communes-api-sources:
     external: true
 
 networks:
-  default:
-    external:
-      name: nginx-proxy
+  nginx-proxy:
+    external: true
