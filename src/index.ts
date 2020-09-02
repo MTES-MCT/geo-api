@@ -1,6 +1,8 @@
-require('dotenv').config()
+import 'dotenv/config'
+import * as express from 'express'
 
-const express = require('express')
+import { port, url } from './config/index'
+
 require('express-async-errors')
 
 const basicAuth = require('express-basic-auth')
@@ -8,14 +10,12 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const slowDown = require('express-slow-down')
 
-const { port, url } = require('./lib/config')
-
 // Recherche naïve de comparaison itérative
 // const communesFind = require('./communes-find-intersect')
 
 // Recherche utilisant un index basé sur les bbox
-const communesFind = require('./lib/communes-find-rbush')
-const tree = require('./lib/rbush-tree')
+const communesFind = require('./communes-find-rbush')
+const tree = require('./rbush-tree')
 
 const app = express()
 
@@ -56,7 +56,7 @@ app.post('/', ({ body }, res, next) => {
   }
 })
 
-app.use((err, req, res, next) => {
+app.use((err: any, req: any, res: any, next: any) => {
   console.error(err)
 
   // if (err.body) {
