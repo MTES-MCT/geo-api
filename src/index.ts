@@ -2,6 +2,8 @@ import 'dotenv/config'
 import * as express from 'express'
 
 import { port, url } from './config/index'
+import { communesFind } from './communes-find-rbush'
+import { tree } from './rbush-tree'
 
 require('express-async-errors')
 
@@ -9,13 +11,6 @@ const basicAuth = require('express-basic-auth')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const slowDown = require('express-slow-down')
-
-// Recherche naïve de comparaison itérative
-// const communesFind = require('./communes-find-intersect')
-
-// Recherche utilisant un index basé sur les bbox
-const communesFind = require('./communes-find-rbush')
-const tree = require('./rbush-tree')
 
 const app = express()
 

@@ -1,6 +1,6 @@
 const fs = require('fs')
 const geojsonRbush = require('geojson-rbush').default
-const tree = geojsonRbush()
+export const tree = geojsonRbush()
 
 console.info('Chargement des communes...')
 
@@ -12,5 +12,3 @@ console.info("Insertion dans l'index")
 sourceCommunes.forEach(c => tree.insert(c))
 
 console.info('Prêt')
-
-module.exports = tree
