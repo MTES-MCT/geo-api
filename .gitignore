@@ -3,3 +3,4 @@ sources/
 dist
 .env
 .idea
+coverage/

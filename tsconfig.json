@@ -16,7 +16,7 @@
     "strictNullChecks": true,
     "sourceMap": true,
     "target": "ES2017",
-    "types": ["node"]
+    "types": ["node", "jest"]
   },
   "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts", "**/__mocks__/*"],
   "include": ["src/**/*"]
