@@ -3,30 +3,12 @@
 ## Copier les fichiers sources (geojson) sur le serveur
 
 ```bash
-scp -r sources <user>@<ip>:/srv/tmp/geo-communes-api-sources
+scp -r sources <user>@<ip>:/srv/tmp/geo-communes-api
 ```
 
-## Créer un volume Docker pour y copier les sources
-
-Pour créer un volume docker il est nécessaire de créer un container [cf](https://github.com/moby/moby/issues/25245#issuecomment-365980572).
-
+## Copier les fichiers sources dans le dossier volume de container
 ```bash
-# créé un container dummy avec l'image Docker busybox auquel on associe le volume
-docker container create --name dummy -v geo-communes-api-sources:/vol busybox
-# copie les fichiers dans le volume en passant par le container
-# sur le vps
-docker cp /srv/tmp/geo-communes-api-sources/. dummy:/vol/
-# en local
-docker cp sources/. dummy:/vol/
-# supprime le container
-docker rm dummy
-```
-
-## Lister les fichiers dans le volume Docker
-
-```bash
-# créé un container avec l'image Docker busybox pour inspécter le contenu du volume
-docker run -it --rm -v geo-communes-api-sources:/vol busybox ls -l /vol
+sudo cp -r /srv/tmp/geo-communes-api/sources /srv/www/geo-communes-api
 ```
 
 ## Environnement de développement
