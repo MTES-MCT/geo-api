@@ -1,3 +1,6 @@
 node_modules/
 sources/
+dist
 .env
+.idea
+coverage/

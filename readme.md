@@ -1,6 +1,6 @@
 # Géo Communes API
 
-> Retourne une liste de communes françaises en fonction d'un périmètre géographique.
+> Retourne une liste de communes françaises et/ou de forêts de Guyane en fonction d'un périmètre géographique.
 
 ---
 
@@ -16,13 +16,15 @@
 Pour que l'application fonctionne, sont requis:
 
 - Node.js (v.10 ou plus) et npm.
-- Le [fichier source](http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/latest/geojson/communes-100m.geojson) des périmètres géographiques des communes.
+- Le [fichier source des communes](http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/latest/geojson/communes-100m.geojson) des périmètres géographiques des communes.
+- Le [fichier source des forêts de Guyane](https://catalogue.geoguyane.fr/geosource/panierDownloadFrontalParametrage?LAYERIDTS=91217) avec la projection ***WGS84 (EPSG 4326) [EPSG:4326]***.
 
 ---
 
 ## Configuration et imports des données
 
-- Importer le fichier source dans le dossier `/sources`: `communes-100m.geojson`.
+- Importer le fichier source des communes dans le dossier `/sources`: `communes-100m.geojson`.
+- Importer le fichier source des forêts de guyanne dans le dossier `/sources`: `forets-guyane.geojson`.
 - Renommer le fichier `.env.example` en `.env` et le compléter.
 
 ---
