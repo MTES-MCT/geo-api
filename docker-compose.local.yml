@@ -11,14 +11,10 @@ services:
     expose:
       - ${PORT}
     volumes:
-      - geo-communes-api-sources:/app/sources
+      - ./sources:/app/sources
       - ./.env:/app/.env
     networks:
       - nginx-proxy
-
-volumes:
-  geo-communes-api-sources:
-    external: true
 
 networks:
   nginx-proxy:
