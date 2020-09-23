@@ -6,9 +6,9 @@
 scp -r sources <user>@<ip>:/srv/tmp/geo-communes-api
 ```
 
-## Copier les fichiers sources dans le dossier volume de container
+## Copier les fichiers sources dans le dossier d’environnement de geo-communes-api
 ```bash
-sudo cp -r /srv/tmp/geo-communes-api/sources /srv/www/geo-communes-api
+sudo cp -r /srv/tmp/geo-communes-api/sources /srv/env/geo-communes-api
 ```
 
 ## Environnement de développement
