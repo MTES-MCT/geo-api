@@ -27,7 +27,7 @@ const communesTree = communesTreeGet()
 
 const foretsTreeGet = () => {
   console.info('Chargement des forêts...')
-  const tree = treeLoad('./sources/forets-guyane.geojson')
+  const tree = treeLoad('./sources/forets_onf_973.json')
   console.info('Chargement des forêts terminé.')
 
   return tree

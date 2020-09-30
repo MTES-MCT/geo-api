@@ -3,12 +3,7 @@
 ## Copier les fichiers sources (geojson) sur le serveur
 
 ```bash
-scp -r sources <user>@<ip>:/srv/tmp/geo-communes-api
-```
-
-## Copier les fichiers sources dans le dossier d’environnement de geo-communes-api
-```bash
-sudo cp -r /srv/tmp/geo-communes-api/sources /srv/env/geo-communes-api
+scp -r sources <user>@<ip>:/srv/env/geo-api
 ```
 
 ## Environnement de développement

@@ -16,15 +16,15 @@
 Pour que l'application fonctionne, sont requis:
 
 - Node.js (v.10 ou plus) et npm.
-- Le [fichier source des communes](http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/latest/geojson/communes-100m.geojson) des périmètres géographiques des communes.
-- Le [fichier source des forêts de Guyane](https://catalogue.geoguyane.fr/geosource/panierDownloadFrontalParametrage?LAYERIDTS=91217) avec la projection **_WGS84 (EPSG 4326) [EPSG:4326]_**.
+- Le [fichier `communes-100m.geojson`](http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/latest/geojson/communes-100m.geojson) des périmètres géographiques des communes.
+- Le [fichier `forets_onf_973.json`](https://catalogue.geoguyane.fr/geosource/panierDownloadFrontalParametrage?LAYERIDTS=91217) des forêts de Guyane (Choisir le format de données `GeoJSON` et la projection `WGS84 (EPSG 4326) [EPSG:4326]`).
 
 ---
 
 ## Configuration et imports des données
 
-- Importer le fichier source des communes dans le dossier `/sources`: `communes-100m.geojson`.
-- Importer le fichier source des forêts de guyanne dans le dossier `/sources`: `forets-guyane.geojson`.
+- Importer le fichier des communes dans le dossier `/sources`: `communes-100m.geojson`.
+- Importer le fichier des forêts de guyanne dans le dossier `/sources`: `forets_onf_973.json`.
 - Renommer le fichier `.env.example` en `.env` et le compléter.
 
 ---

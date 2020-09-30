@@ -26,7 +26,7 @@ app.use(morgan('dev'))
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-  res.send('Géo communes API | https://github.com/MTES-MCT/geo-communes-api')
+  res.send('Géo communes API | https://github.com/MTES-MCT/geo-api')
 })
 
 if (process.env.BASIC_USER && process.env.BASIC_PASSWORD) {

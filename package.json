@@ -1,11 +1,11 @@
 {
-  "name": "geo-communes-api",
+  "name": "geo-api",
   "version": "0.4.0",
-  "description": "Retourne une liste de communes françaises en fonction d'un périmètre géographique",
+  "description": "Retourne une liste de communes et forêts françaises en fonction d'un périmètre géographique",
   "license": "AGPL-3.0-or-later",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MTES-MCT/geo-communes-api"
+    "url": "https://github.com/MTES-MCT/geo-api"
   },
   "main": "index.js",
   "dependencies": {
