@@ -1,4 +1,4 @@
-# Géo Communes API
+# Géo API
 
 > Retourne une liste de communes françaises et/ou de forêts de Guyane en fonction d'un périmètre géographique.
 
@@ -17,7 +17,7 @@ Pour que l'application fonctionne, sont requis:
 
 - Node.js (v.10 ou plus) et npm.
 - Le [fichier source des communes](http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/latest/geojson/communes-100m.geojson) des périmètres géographiques des communes.
-- Le [fichier source des forêts de Guyane](https://catalogue.geoguyane.fr/geosource/panierDownloadFrontalParametrage?LAYERIDTS=91217) avec la projection ***WGS84 (EPSG 4326) [EPSG:4326]***.
+- Le [fichier source des forêts de Guyane](https://catalogue.geoguyane.fr/geosource/panierDownloadFrontalParametrage?LAYERIDTS=91217) avec la projection **_WGS84 (EPSG 4326) [EPSG:4326]_**.
 
 ---
 
@@ -37,23 +37,23 @@ npm run start
 ```
 
 - répond à une requête POST contenant un GeoJSON.
-- retourne une liste de communes françaises dont le périmètre contient une intersection avec le GeoJSON.
+- retourne une liste de communes et de forêts françaises dont le périmètre contient une intersection avec le GeoJSON.
 
 Exemple de code javascript pour interroger l'API :
 
 ```js
-const geoCommunesApiUrl = 'http://localhost:1234' // renseigner l'url de l'API
+const geoCommunesApiUrl = 'http://localhost:1234'
 
-const communesGeojsonGet = (geojson) =>
+const communesGeojsonGet = geojson =>
   fetch(geoCommunesApiUrl, {
     method: 'post',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(geojson),
+    body: JSON.stringify(geojson)
   })
-    .then((response) => response.json())
-    .catch((err) => {
+    .then(response => response.json())
+    .catch(err => {
       console.log('communesGeojsonGet error: ', err)
       return []
     })
