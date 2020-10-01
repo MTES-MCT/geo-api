@@ -38,44 +38,40 @@ if (process.env.BASIC_USER && process.env.BASIC_PASSWORD) {
 }
 
 app.post('/', ({ body, query }, res, next) => {
-  let elements: string[]
-  if (!query || !query.elements) {
-    next({
-      message:
-        'Veuillez renseigner le ou les types d’éléments souhaités (communes et/ou forets) sous la forme https://...?elements=communes,forets',
-      status: 400
-    })
-  } else {
-    try {
-      elements = (query.elements as string).split(',')
+  let elements: string[] = ['communes', 'forets']
+  if (query && query.elements) {
+    const queryElements = (query.elements as string).split(',')
 
-      res.send(
-        elements.reduce<any>((acc, element) => {
-          let areas
-          switch (element) {
-            case 'communes':
-              areas = communesFind(body)
-              break
-            case 'forets':
-              areas = foretsFind(body)
-              break
-            default:
-              next({
-                message: `L’élément "${element}" est inconnu`,
-                status: 400
-              })
-
-              return
-          }
-          acc[element] = areas
-
-          return acc
-        }, {})
-      )
-    } catch (err) {
-      err.body = body
-      next(err)
+    if (queryElements.some(q => !elements.includes(q))) {
+      next({
+        message: `Seuls les éléments suivants sont possibles: ${elements.join(
+          ', '
+        )}`,
+        status: 400
+      })
     }
+    elements = queryElements
+  }
+  try {
+    res.send(
+      elements.reduce<any>((acc, element) => {
+        let areas
+        switch (element) {
+          case 'communes':
+            areas = communesFind(body)
+            break
+          case 'forets':
+            areas = foretsFind(body)
+            break
+        }
+        acc[element] = areas
+
+        return acc
+      }, {})
+    )
+  } catch (err) {
+    err.body = body
+    next(err)
   }
 })
 
