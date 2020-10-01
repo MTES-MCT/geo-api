@@ -1,44 +1,42 @@
-import { Polygon, Properties, Feature, MultiPolygon } from '@turf/helpers'
-import { RBush } from 'geojson-rbush'
-import intersect from '@turf/intersect'
-import area from '@turf/area'
-import { IArea } from './types'
+import turfIntersect from '@turf/intersect'
+import turfArea from '@turf/area'
+import { IArea, IGeojson, IRBushTree } from './types'
 
-export const rbushFind = <I, O extends IArea>(
-  geojsonMultiPolygon: Feature<Polygon | MultiPolygon>,
-  tree: RBush<Polygon | MultiPolygon, Properties>,
-  mapper: (input: I) => O
-): { properties: O }[] => {
-  if (!geojsonMultiPolygon.properties) {
-    geojsonMultiPolygon.properties = {}
-  }
-
+const rbushFind = <I, O extends IArea>(
+  geojson: IGeojson,
+  tree: IRBushTree,
+  format?: (input: I) => O
+) => {
   try {
+    if (!geojson.properties) {
+      geojson.properties = {}
+    }
     // Recherche le périmètre dans l'index bbox
-    const { features: matchingCommunes = [] } = tree.search(geojsonMultiPolygon)
+    const { features } = tree.search(geojson)
 
     // Filtre les éléments trouvés par l'index et compare le périmètre
-    return matchingCommunes.reduce((communes: { properties: O }[], commune) => {
-      const intersected = intersect(geojsonMultiPolygon, commune)
-      if (!intersected) return communes
+    return features.reduce((areas: O[], feature) => {
+      if (!feature.properties) return areas
 
-      const { properties } = commune
+      const intersection = turfIntersect(geojson, feature)
 
-      if (!properties) {
-        return communes
-      }
+      if (!intersection) return areas
 
-      const result = mapper(properties as I)
+      const area = format
+        ? format(feature.properties as I)
+        : (feature.properties as O)
 
       // calcule la surface couverte par le périmètre de l’élément
-      result.surface = Math.round(area(intersected))
+      area.surface = Math.round(turfArea(intersection))
 
-      communes.push({ properties: result })
+      areas.push(area)
 
-      return communes
+      return areas
     }, [])
   } catch (e) {
     e.status = 400
     throw e
   }
 }
+
+export { rbushFind }

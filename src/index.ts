@@ -8,7 +8,15 @@ import 'express-async-errors'
 
 import { port, url } from './config'
 import { communesFind, foretsFind } from './rbush-tree'
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
+import { IAreas, IAreasIndex, IAreaIds } from './types'
+
+const ELEMENTS_INDEX = {
+  communes: communesFind,
+  forets: foretsFind
+} as IAreasIndex
+
+const ELEMENTS_IDS = Object.keys(ELEMENTS_INDEX) as IAreaIds
 
 const app = express()
 
@@ -37,51 +45,43 @@ if (process.env.BASIC_USER && process.env.BASIC_PASSWORD) {
   )
 }
 
-app.post('/', ({ body, query }, res, next) => {
-  let elements: string[] = ['communes', 'forets']
-  if (query && query.elements) {
-    const queryElements = (query.elements as string).split(',')
-
-    if (queryElements.some(q => !elements.includes(q))) {
-      next({
-        message: `Seuls les éléments suivants sont possibles: ${elements.join(
-          ', '
-        )}`,
-        status: 400
-      })
-    }
-    elements = queryElements
-  }
+app.post('/', ({ body: geojson, query }, res, next) => {
   try {
-    res.send(
-      elements.reduce<any>((acc, element) => {
-        let areas
-        switch (element) {
-          case 'communes':
-            areas = communesFind(body)
-            break
-          case 'forets':
-            areas = foretsFind(body)
-            break
-        }
-        acc[element] = areas
+    let elementsIds = [] as IAreaIds
 
-        return acc
-      }, {})
-    )
+    if (query?.elements) {
+      const queryElementsIds = (query.elements as string).split(',')
+
+      if (queryElementsIds.some(q => !(ELEMENTS_IDS as string[]).includes(q))) {
+        next({
+          message: `éléments possibles: ${ELEMENTS_IDS.join(', ')}`,
+          status: 400
+        })
+      }
+
+      elementsIds = queryElementsIds as IAreaIds
+    } else {
+      elementsIds = ELEMENTS_IDS.slice()
+    }
+
+    const areas = elementsIds.reduce((acc: IAreas, id) => {
+      const find = ELEMENTS_INDEX[id]
+
+      // TODO: comment virer cette erreur ts ?
+      acc[id] = find(geojson)
+
+      return acc
+    }, {})
+
+    res.send(areas)
   } catch (err) {
-    err.body = body
+    err.body = geojson
     next(err)
   }
 })
 
 app.use(
-  (
-    err: { status: number; message: string },
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  (err: { status: number; message: string }, req: Request, res: Response) => {
     console.error(err)
     res.status(err.status || 500).json({ error: err.message })
   }

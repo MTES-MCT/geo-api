@@ -1,17 +1,14 @@
-import geojsonRbush, { RBush } from 'geojson-rbush'
 import * as fs from 'fs'
-import { Feature, MultiPolygon, Polygon, Properties } from '@turf/helpers'
+import geojsonRbush from 'geojson-rbush'
 import { rbushFind } from './rbush-find'
-import { ICommune, IForetInput, IForetOutput } from './types'
+import { ICommune, IForetInput, IForet, IGeojson, IRBushTree } from './types'
 
-export const treeLoad = (
-  filePath: string
-): RBush<Polygon | MultiPolygon, Properties> => {
+const treeLoad = (filePath: string): IRBushTree => {
   const tree = geojsonRbush()
   const sourceCommunes = JSON.parse(fs.readFileSync(filePath).toString())
     .features
 
-  sourceCommunes.forEach((c: Feature<Polygon | MultiPolygon>) => tree.insert(c))
+  sourceCommunes.forEach((c: IGeojson) => tree.insert(c))
 
   return tree
 }
@@ -23,7 +20,6 @@ const communesTreeGet = () => {
 
   return tree
 }
-const communesTree = communesTreeGet()
 
 const foretsTreeGet = () => {
   console.info('Chargement des forêts...')
@@ -32,16 +28,18 @@ const foretsTreeGet = () => {
 
   return tree
 }
+
+const communesTree = communesTreeGet()
 const foretsTree = foretsTreeGet()
 
-export const communesFind = (body: Feature<Polygon | MultiPolygon>) => {
-  return rbushFind<ICommune, ICommune>(body, communesTree, commune => commune)
-}
+const communesFind = (geojson: IGeojson) =>
+  rbushFind<ICommune, ICommune>(geojson, communesTree)
 
-export const foretsFind = (body: Feature<Polygon | MultiPolygon>) => {
-  return rbushFind<IForetInput, IForetOutput>(body, foretsTree, foret => ({
+const foretsFind = (geojson: IGeojson) =>
+  rbushFind<IForetInput, IForet>(geojson, foretsTree, foret => ({
     nom: foret.foret,
     code: foret.code_for,
     perimetre: foret.perimeter
   }))
-}
+
+export { communesFind, foretsFind }

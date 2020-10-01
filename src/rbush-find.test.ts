@@ -1,4 +1,4 @@
-import { communesGeojson } from './mocks/communes-geojson'
+import { communesGeojson } from './__mocks__/communes-geojson'
 import { communesFind } from './rbush-tree'
 
 jest.mock('fs', () => {
@@ -30,13 +30,11 @@ describe('communesFind', () => {
       })
     ).toEqual([
       {
-        properties: {
-          code: '97311',
-          departement: '973',
-          nom: 'Saint-Laurent-du-Maroni',
-          region: '03',
-          surface: 1004627
-        }
+        code: '97311',
+        departement: '973',
+        nom: 'Saint-Laurent-du-Maroni',
+        region: '03',
+        surface: 1004627
       }
     ])
   })
