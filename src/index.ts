@@ -8,15 +8,15 @@ import 'express-async-errors'
 
 import { port, url } from './config'
 import { communesFind, foretsFind } from './rbush-tree'
-import { Request, Response } from 'express'
-import { IAreas, IAreasIndex, IAreaIds } from './types'
+import { Request, Response, NextFunction } from 'express'
+import { IAreas, IAreasIndex, IAreaId, ICommune, IForet } from './types'
 
 const ELEMENTS_INDEX = {
   communes: communesFind,
   forets: foretsFind
 } as IAreasIndex
 
-const ELEMENTS_IDS = Object.keys(ELEMENTS_INDEX) as IAreaIds
+const ELEMENTS_IDS = Object.keys(ELEMENTS_INDEX) as IAreaId[]
 
 const app = express()
 
@@ -47,7 +47,7 @@ if (process.env.BASIC_USER && process.env.BASIC_PASSWORD) {
 
 app.post('/', ({ body: geojson, query }, res, next) => {
   try {
-    let elementsIds = [] as IAreaIds
+    let elementsIds = [] as IAreaId[]
 
     if (query?.elements) {
       const queryElementsIds = (query.elements as string).split(',')
@@ -57,18 +57,18 @@ app.post('/', ({ body: geojson, query }, res, next) => {
           message: `éléments possibles: ${ELEMENTS_IDS.join(', ')}`,
           status: 400
         })
+
+        return
       }
 
-      elementsIds = queryElementsIds as IAreaIds
+      elementsIds = queryElementsIds as IAreaId[]
     } else {
-      elementsIds = ELEMENTS_IDS.slice()
+      elementsIds = ELEMENTS_IDS.slice() as IAreaId[]
     }
 
     const areas = elementsIds.reduce((acc: IAreas, id) => {
-      const find = ELEMENTS_INDEX[id]
-
-      // TODO: comment virer cette erreur ts ?
-      acc[id] = find(geojson)
+      const areasFind = ELEMENTS_INDEX[id]
+      acc[id] = areasFind(geojson) as ICommune[] & IForet[]
 
       return acc
     }, {})
@@ -81,7 +81,14 @@ app.post('/', ({ body: geojson, query }, res, next) => {
 })
 
 app.use(
-  (err: { status: number; message: string }, req: Request, res: Response) => {
+  (
+    err: { status: number; message: string },
+    req: Request,
+    res: Response,
+    // nécessaire pour express-async-errors
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    next: NextFunction
+  ) => {
     console.error(err)
     res.status(err.status || 500).json({ error: err.message })
   }

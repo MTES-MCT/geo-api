@@ -29,11 +29,6 @@ interface IForet extends IArea {
   perimetre: number
 }
 
-interface IAreas {
-  communes?: ICommune[]
-  forets?: IForet[]
-}
-
 type IAreaFind<O> = (geojson: IGeojson) => O[]
 
 interface IAreasIndex {
@@ -41,7 +36,12 @@ interface IAreasIndex {
   forets: IAreaFind<IForet>
 }
 
-type IAreaIds = (keyof IAreasIndex)[]
+type IAreaId = keyof IAreasIndex
+
+interface IAreas {
+  communes?: ICommune[]
+  forets?: IForet[]
+}
 
 export {
   IGeojson,
@@ -53,5 +53,5 @@ export {
   IAreas,
   IAreaFind,
   IAreasIndex,
-  IAreaIds
+  IAreaId
 }
