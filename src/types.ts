@@ -1,16 +1,22 @@
-export interface IArea {
+import { Polygon, Properties, Feature, MultiPolygon } from '@turf/helpers'
+import { RBush } from 'geojson-rbush'
+
+type IGeojson = Feature<Polygon | MultiPolygon>
+type IRBushTree = RBush<Polygon | MultiPolygon, Properties>
+
+interface IArea {
   nom: string
   code: string
   surface?: number
 }
 
 // Même format d’entrée et de sortie pour les communes
-export interface ICommune extends IArea {
+interface ICommune extends IArea {
   departement: string
   region: string
 }
 
-export interface IForetInput {
+interface IForetInput {
   gid: number
   foret: string
   // eslint-disable-next-line camelcase
@@ -19,6 +25,33 @@ export interface IForetInput {
   perimeter: number
 }
 
-export interface IForetOutput extends IArea {
+interface IForet extends IArea {
   perimetre: number
+}
+
+type IAreaFind<O> = (geojson: IGeojson) => O[]
+
+interface IAreasIndex {
+  communes: IAreaFind<ICommune>
+  forets: IAreaFind<IForet>
+}
+
+type IAreaId = keyof IAreasIndex
+
+interface IAreas {
+  communes?: ICommune[]
+  forets?: IForet[]
+}
+
+export {
+  IGeojson,
+  IRBushTree,
+  IArea,
+  ICommune,
+  IForet,
+  IForetInput,
+  IAreas,
+  IAreaFind,
+  IAreasIndex,
+  IAreaId
 }

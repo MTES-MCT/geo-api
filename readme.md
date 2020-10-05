@@ -32,7 +32,13 @@ Pour que l'application fonctionne, sont requis:
 ## Usage
 
 ```bash
-# installe les dépendances et démarre le serveur
+# installe les dépendances
+npm install
+
+# construit l'application
+npm run build
+
+# démarre le serveur
 npm run start
 ```
 
@@ -42,23 +48,41 @@ npm run start
 Exemple de code javascript pour interroger l'API :
 
 ```js
-const geoCommunesApiUrl = 'http://localhost:1234'
+const geoApiUrl = 'http://localhost:1234'
+const myGeoJson = {
+  type: 'Feature',
+  properties: {},
+  geometry: {
+    type: 'MultiPolygon',
+    coordinates: [
+      [
+        [
+          [-54.0950602907814, 5.20885569954379],
+          [-54.1130169578246, 5.21036597243676],
+          [-54.1134002694189, 5.20586546870085],
+          [-54.0954347319799, 5.20435517507967],
+          [-54.0950602907814, 5.20885569954379]
+        ]
+      ]
+    ]
+  }
+}
 
-const communesGeojsonGet = geojson =>
-  fetch(geoCommunesApiUrl, {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(geojson)
-  })
-    .then(response => response.json())
-    .catch(err => {
-      console.log('communesGeojsonGet error: ', err)
-      return []
+const geoApi = async geojson => {
+  try {
+    const response = await fetch(geoApiUrl, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(geojson)
     })
 
-communesGeojsonGet(myGeoJson)
+    return response.json()
+  } catch (err) {
+    console.error('error: ', err)
+  }
+}
+
+geoApi(myGeoJson).then(r => console.log(JSON.stringify(r, null, 2)))
 ```
 
 ---

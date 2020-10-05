@@ -8,7 +8,15 @@ import 'express-async-errors'
 
 import { port, url } from './config'
 import { communesFind, foretsFind } from './rbush-tree'
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
+import { IAreas, IAreasIndex, IAreaId, ICommune, IForet } from './types'
+
+const ELEMENTS_INDEX = {
+  communes: communesFind,
+  forets: foretsFind
+} as IAreasIndex
+
+const ELEMENTS_IDS = Object.keys(ELEMENTS_INDEX) as IAreaId[]
 
 const app = express()
 
@@ -37,45 +45,38 @@ if (process.env.BASIC_USER && process.env.BASIC_PASSWORD) {
   )
 }
 
-app.post('/', ({ body, query }, res, next) => {
-  let elements: string[]
-  if (!query || !query.elements) {
-    next({
-      message:
-        'Veuillez renseigner le ou les types d’éléments souhaités (communes et/ou forets) sous la forme https://...?elements=communes,forets',
-      status: 400
-    })
-  } else {
-    try {
-      elements = (query.elements as string).split(',')
+app.post('/', ({ body: geojson, query }, res, next) => {
+  try {
+    let elementsIds = [] as IAreaId[]
 
-      res.send(
-        elements.reduce<any>((acc, element) => {
-          let areas
-          switch (element) {
-            case 'communes':
-              areas = communesFind(body)
-              break
-            case 'forets':
-              areas = foretsFind(body)
-              break
-            default:
-              next({
-                message: `L’élément "${element}" est inconnu`,
-                status: 400
-              })
+    if (query?.elements) {
+      const queryElementsIds = (query.elements as string).split(',')
 
-              return
-          }
-          acc[element] = areas
+      if (queryElementsIds.some(q => !(ELEMENTS_IDS as string[]).includes(q))) {
+        next({
+          message: `éléments possibles: ${ELEMENTS_IDS.join(', ')}`,
+          status: 400
+        })
 
-          return acc
-        }, {})
-      )
-    } catch (err) {
-      err.body = body
-      next(err)
+        return
+      }
+
+      elementsIds = queryElementsIds as IAreaId[]
+    } else {
+      elementsIds = ELEMENTS_IDS.slice() as IAreaId[]
     }
+
+    const areas = elementsIds.reduce((acc: IAreas, id) => {
+      const areasFind = ELEMENTS_INDEX[id]
+      acc[id] = areasFind(geojson) as ICommune[] & IForet[]
+
+      return acc
+    }, {})
+
+    res.send(areas)
+  } catch (err) {
+    err.body = geojson
+    next(err)
   }
 })
 
@@ -84,6 +85,8 @@ app.use(
     err: { status: number; message: string },
     req: Request,
     res: Response,
+    // nécessaire pour express-async-errors
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     next: NextFunction
   ) => {
     console.error(err)
