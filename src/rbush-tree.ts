@@ -15,7 +15,7 @@ const treeLoad = (filePath: string): IRBushTree => {
 
 const communesTreeGet = () => {
   console.info('Chargement des communes...')
-  const tree = treeLoad('./sources/communes-100m.geojson')
+  const tree = treeLoad('./sources/communes.geojson')
   console.info('Chargement des communes terminé.')
 
   return tree
