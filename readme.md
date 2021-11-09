@@ -17,7 +17,8 @@ Pour que l'application fonctionne, sont requis:
 
 - Node.js (v.10 ou plus) et npm.
 - Un [fichier geojson de communes](http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/latest/geojson) des périmètres géographiques des communes.
-- Le [fichier `forets_onf_973.json`](https://catalogue.geoguyane.fr/geosource/panierDownloadFrontalParametrage?LAYERIDTS=91217) des forêts de Guyane (Choisir le format de données `GeoJSON` et la projection `WGS84 (EPSG 4326) [EPSG:4326]`).
+- Le fichier [forets_onf_973.json](https://catalogue.geoguyane.fr/geosource/panierDownloadFrontalParametrage?LAYERIDTS=91217) des forêts de Guyane (Choisir le format de données `GeoJSON` et la projection `WGS84 (EPSG 4326) [EPSG:4326]`).
+- Les fichiers du SDOM du Guyane [zone_0_potentielle_s_973.json](https://catalogue.geoguyane.fr/geosource/panierDownloadFrontalParametrage/b6bc9b5d-fe7f-4fde-9d75-f512e5a33374), [zone_0_s_973.json](https://catalogue.geoguyane.fr/geosource/panierDownloadFrontalParametrage/cacbd740-dbb1-421e-af2d-96c9f0bd9a6d), [zone_1_s_973.json](https://catalogue.geoguyane.fr/geosource/panierDownloadFrontalParametrage/c224cfbe-e24e-418b-ad3f-44c07ee19862) et [zone_2_s_973.json](https://catalogue.geoguyane.fr/geosource/panierDownloadFrontalParametrage/125ffae0-53a5-431e-9568-5213b6643608) (Choisir le format de données `GeoJSON` et la projection `WGS84 (EPSG 4326) [EPSG:4326]`).
 
 ---
 
@@ -25,6 +26,7 @@ Pour que l'application fonctionne, sont requis:
 
 - Importer le fichier des communes dans le dossier `/sources`: `communes.geojson`.
 - Importer le fichier des forêts de guyanne dans le dossier `/sources`: `forets_onf_973.json`.
+- Importer les fichiers du SDOM dans le dossier `/sources`.
 - Renommer le fichier `.env.example` en `.env` et le compléter.
 
 ---

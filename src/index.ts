@@ -7,13 +7,14 @@ import * as morgan from 'morgan'
 import 'express-async-errors'
 
 import { port, url } from './config'
-import { communesFind, foretsFind } from './rbush-tree'
+import { communesFind, foretsFind, sdomZonesFind } from './rbush-tree'
 import { Request, Response, NextFunction } from 'express'
 import { IAreas, IAreasIndex, IAreaId, ICommune, IForet } from './types'
 
 const ELEMENTS_INDEX = {
   communes: communesFind,
-  forets: foretsFind
+  forets: foretsFind,
+  sdomZones: sdomZonesFind
 } as IAreasIndex
 
 const ELEMENTS_IDS = Object.keys(ELEMENTS_INDEX) as IAreaId[]
